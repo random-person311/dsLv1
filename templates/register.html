@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column justify-content-center align-items-center w-100 vh-100">
+    {% include "flash.html" %}
+    <div class="container-fluid d-flex flex-column align-items-center" style="max-width:420px">
+        <h2 class="text-center mb-3">Register</h2>
+        <form action="/register/submit" method="POST" class="w-100 my-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" name="rpassword" id="rpassword" placeholder="Repeat Password"
+                required>
+                <label for="rpassword">Repeat Password</label>
+            </div>
+            <input type="submit" class="w-100 btn btn-primary" value="Register">
+        </form>
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        $('#rpassword, #password').change((event) => {
+            if ($('#password').val() != $('#rpassword').val()) {
+                $('#rpassword')[0].setCustomValidity("The password should be the same");
+            } else {
+                $('#rpassword')[0].setCustomValidity("");
+            }
+        })
+    })
+</script>
+{% endblock %}

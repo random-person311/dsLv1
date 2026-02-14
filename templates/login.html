@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+{% include "flash.html" %}
+
+<div class="d-flex flex-column justify-content-center align-items-center w-100 vh-100">
+    <div class="container-fluid d-flex flex-column align-items-center" style="max-width:420px">
+        <h2 class="text-center mb-3">Login</h2>
+        <form action="/auth" method="POST" class="w-100 my-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <input type="submit" class="w-100 btn btn-primary" value="Sign in">
+        </form>
+        <p>Not a member yet? <a href="/register">Register</a></p>
+    </div>
+</div>
+
+{% endblock %}
