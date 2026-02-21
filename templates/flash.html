@@ -1,0 +1,26 @@
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="toast-container position-fixed end-0 p-2" style="z-index: 2000">
+      {% for msg in messages %}
+        <div class="toast d-flex" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+          <div class="toast-body">
+            <span class="me-auto">{{ msg }}</span>
+          </div>
+          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<script>
+  $(document).ready(() => {
+    let topSpace = 16;
+    if ($('.navbar').length > 0) {
+      topSpace += $('.navbar').height();
+    }
+    $('.toast-container').css('top', topSpace);
+    
+    $('.toast').toast("show");
+  });
+</script>

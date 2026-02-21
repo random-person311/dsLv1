@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">RC Groceries</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                {% if session['role'] == 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/items">Product Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard/users">User Overview</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav mb-0">
+                <a class="nav-link" href="#">
+                    Welcome, {{ session['user'] }}
+                </a>
+                <li class="nav-item ms-lg-3">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

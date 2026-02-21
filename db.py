@@ -5,12 +5,9 @@ db = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "root",
-    database = "dslevel1_fp"
+    database = "dslv1_fp"
 )
 cursor = db.cursor(dictionary=True)
-
-
-
 
 def auth(username, password):
     cursor.execute("SELECT role FROM users WHERE username =%s AND password =%s", (username, password))
