@@ -83,6 +83,35 @@ def auth():
             flash("Incorrect username or password!")
             return redirect('/login')
 
+@app.route('/dashboard_items.html')
+def dashboard_items():
+    return render_template('dashboard_items.html', data=[{
+        'id':1,
+        'name':'item1',
+        'desc':'item1 desc',
+        'category':'item1 category',
+        'price':100.0,
+        'stock':10
+    }])
+
+
+@app.route('/dashboard/items/edit/<id>')
+def dashboard_items_edit(id):
+    if session['role'] != 1:
+        return redirect('/home')
+    product = db.get_product(id)
+    if product == None:
+        return render_template('dashboard_edit_item.html', data=product)
+    else:
+        return redirect('/dashboard/items')
+
+
+
+
+
+
+
+
 
 @app.route('/home')
 def home():
