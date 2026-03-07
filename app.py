@@ -83,16 +83,12 @@ def auth():
             flash("Incorrect username or password!")
             return redirect('/login')
 
-@app.route('/dashboard_items.html')
+@app.route('/dashboard/items', methods = ['GET'])
 def dashboard_items():
-    return render_template('dashboard_items.html', data=[{
-        'id':1,
-        'name':'item1',
-        'desc':'item1 desc',
-        'category':'item1 category',
-        'price':100.0,
-        'stock':10
-    }])
+    products = db.get_products()
+    return render_template('dashboard_items.html', data=products)
+
+
 
 
 @app.route('/dashboard/items/edit/<id>')
@@ -106,12 +102,47 @@ def dashboard_items_edit(id):
         return redirect('/dashboard/items')
 
 
+@app.route('/dashboard/users')
+def dashboard_users():
+    if session['role'] != 1:
+        return redirect('/home')
+    users = db.get_users()
+    return render_template('usersOverview.html', data=users)
 
+@app.route('/dashboard/users/edit/<id>')
+def dashboard_users_edit(id):
+    if session['role'] != 1:
+        flash("You don't have permission to access this page!")
+        return redirect('/home')
+    user = db.get_users()
+    if user == None:
+        return render_template('dashboard_edit_user.html', data=user)
+    else:
+        return redirect('/dashboard/users')
 
+@app.route('/dashboard/users/sumbitedit/<id>', methods = ['POST'])
+def save_user_edit(id):
+    if not isAdmin():
+        flash("You don't have permission to access this page!")
+        return redirect('/home')
+    if request.method == 'POST':
+        data = request.form
+        db.update_user(id, data)
+        flash(f'Saved  changes to {data["username"]}')
+        return redirect('/dashboard/users')
+    
+@app.route('/dashboard/users/delete/<id>')
+def delete_user(id):
+    if not isAdmin():
+        flash("You don't have permission to access this page!")
+        return redirect('/home')
+    db.delete_user(id)
+    flash('User deleted')
+    return redirect('/dashboard/users')
 
-
-
-
+@app.route('/profit')
+def profit():
+    return guardPage(True, False, render_template('profit.html', data=db.get_user_purchases(session['user'])))
 
 @app.route('/home')
 def home():

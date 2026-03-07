@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% include "navbar.html" %}
+{% block title %}Dashboard - Edit Item{% endblock %}
+
+{% block content %}
+
+<div class="input-group-text rounded-left text-dark" style="width: 30%; font-size: 14px">Edit Item
+    <span class="input-group-text rounded-right text-dark" style="width: 70%; font-size: 14px">
+        {{ dashcolumns[i + 1] }}
+    </span>
+    <input type="text"
+    id="{{ dashcolumns[i + 1]}}"
+    name="{{ dashcolumns[i + 1]}}"
+    class="form-control"
+    placeholder="Enter {{ dashcolumns[i + 1]}}"
+    value="{{ data[i + 1] }}">
+</div>
+
+{% endblock %}

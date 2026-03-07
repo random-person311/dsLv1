@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Overview{% endblock %}
+{% include "navbar.html" %}
+{% block content %}
+{% include flash.html %}
+
+<div class="d-flex flex-column align-items-center w-100">
+    <h2 class="text-center mt-3">Purchase History</h2>
+    <div class="row py-2 align-middle">
+        <div class="col">Total No. of Purchases: {{data|length}}</div>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">product Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Date of Purchase</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr class="align-middle" id="row_{{id}}">
+                    <td id="name_{{id}}">{{row.['name']}}</td>
+                    <td id="quantity_{{id}}">{{row.['quantity']}}</td>
+                    <td id="amount_{{id}}">{{row.['total_amount']}}</td>
+                    <td id="date_{{id}}">{{row.['date']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
