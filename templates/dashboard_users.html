@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}User Overview{% endblock %}
+
+{% block content %}
+
+{% include "navbar.html" %}
+<div class="d-flex flex-column align-items-center w-100">
+    {% include "flash.html" %}
+    <div class="container">
+        <h2 class="text-center mt-3">User Overview</h2>
+        <div class="row py-2 align-middle">
+            <div class="col">No. of users: {{data|length}}</div> 
+            <div class="col text-end">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="bi bi-plus-circle me-2 h-100"></i>
+                    <span>Add User</span>
+                </button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Role</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            {% for row in data %}
+            {% set id = row['id'] %}
+            <tr class="align-middle" id="row_{{id}}">
+                <td id="id_{{id}}">{{row['id']}}</td>
+                <td id="username_{{id}}">{{row['username']}}</td>
+                <td id="password_{{id}}">{{row['password']}}</td>
+                <td id="role_{{id}}">
+                {% if row['role'] == '0' %}
+                    User
+                {% else %}
+                    Admin
+                {% endif %}
+                </td>
+                <td id="edit_{{id}}">
+                    <a href="/dashboard/users/edit/{{id}}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                </td>
+                <td id="delete_{{id}}">
+                    <a href="/dashboard/users/delete/{{id}}" class="btn btn-danger">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/dashboard/users/new" method="POST" class="form">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                        <label for="name">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="password" id="password" placeholder="Password" required>
+                        <label for="desc">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="role" id="role">
+                            <option value="0">User</option>
+                            <option value="1">Admin</option>
+                        </select>
+                        <label for="role">Role</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Save changes"></input>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
